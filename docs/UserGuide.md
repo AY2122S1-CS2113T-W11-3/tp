@@ -26,8 +26,7 @@ commands that you can execute.
   * [Listing Tasks, Lessons or Modules - `list`](#listing-tasks-lessons-or-modules---list)
   * [Marking a Task as done - `done`](#marking-a-task-as-done---done)
   * [Deleting Tasks, Lessons or Modules - `delete`](#deleting-tasks-lessons-or-modules---delete)
-  * [Finding Tasks or lessons by keyword - `find`](#finding-tasks-or-lessons-by-keyword---find)
-  * [Retrieving Module information - `moduleinfo`](#retrieving-module-information---moduleinfo)
+  * [Finding Tasks, Lessons or Modules by keyword - `find`](#finding-tasks-lessons-or-modules-by-keyword---find)
   * [Setting module grade - `set grade`](#setting-module-grade---set-grade)
   * [Exiting the program - `exit`](#exiting-the-program---exit)
   * [Saving the data](#saving-the-data)
@@ -94,21 +93,23 @@ $ help
       ______________________________________________________________________________________
        Here are the list of commands that you can try.
        ------------------------------------------------------------------------------------
-       add        task   [TITLE] -d [DAY_OF_THE_WEEK] -p {PRIORITY} -i {INFORMATION}
-       add        lesson [TITLE] -d [DAY_OF] -s [START_TIME] -e [END_TIME] -l {MEETING_URL}
-       add        module [MODULE_CODE]
-       list       task {PERIOD/PRIORITY}
-       list       lesson {PERIOD}
-       list       module {verbose}
-       delete     task [INDEX]
-       delete     lesson [INDEX]
-       delete     module [MODULE_CODE]
-       done       task [INDEX]
-       find       [task/lesson] [KEYWORD]
-       moduleinfo [MODULE_CODE]
-       set        grade [MODULE_CODE] [GRADE]
-       exit           
-
+       add task [TITLE] -d [DAY_OF_THE_WEEK] -p {PRIORITY} -i {INFORMATION}
+       add lesson [TITLE] -d [DAY_OF_THE_WEEK] -s [START_TIME] -e [END_TIME] -l {MEETING_URL}
+       add module [MODULE_CODE]
+       list task {PERIOD/PRIORITY}
+       list lesson {PERIOD}
+       list module
+       delete task [INDEX]
+       delete lesson [INDEX]
+       delete module [MODULE_CODE]
+       done task [INDEX]
+       find task [KEYWORD]
+       find lesson [KEYWORD]
+       find module [MODULE_CODE] {verbose}
+       set grade [MODULE_CODE] [GRADE]
+       launch lesson [INDEX]
+       exit
+  
        Notes: Square brackets -> [COMPULSORY_PARAMETER]
               Curly braces    -> {OPTIONAL_PARAMETER}
               More details: https://ay2122s1-cs2113t-w11-3.github.io/tp/UserGuide.html
@@ -212,14 +213,14 @@ Example:
 $ add module CS2113T
       ______________________________________________________________________________________
        Noted. I've added this module:
-         CS2113T Software Engineering & Object-Oriented Programming (4MCs) 
+         CS2113T Software Engineering & Object-Oriented Programming (4MCs) | Grade: NONE
        Now you have 1 modules in the list.
       ______________________________________________________________________________________
 
 $ add module CG2028
       ______________________________________________________________________________________
        Noted. I've added this module:
-         CG2028 Computer Organization (2MCs) 
+         CG2028 Computer Organization (2MCs) | Grade: NONE
        Now you have 2 modules in the list.
       ______________________________________________________________________________________
 ```
@@ -299,9 +300,7 @@ $ list lesson tomorrow
 
 #### Module
 
-Format: `list module {verbose}`
-
-* `verbose` provides more detailed information.
+Format: `list module`
 
 ```
 $ list module
@@ -309,29 +308,6 @@ $ list module
        Here are the modules in your list:
        1. CS2113T Software Engineering & Object-Oriented Programming (4MCs) | Grade: A
        2. CG2028 Computer Organization (2MCs) | Grade: B
-       ------------------------------------------------------------------------------------
-       You have a total of 6 MCs
-       Your current CAP is: 4.50
-      ______________________________________________________________________________________
-
-$ list module verbose
-      ______________________________________________________________________________________
-       Here are the detailed information of your modules:
-       ------------------------------------------------------------------------------------
-       CS2113T Software Engineering & Object-Oriented Programming (4MCs) | Grade: A
-       Department: Computer Science
-       Faculty: Computing
-       Preclusion: CS2103, CS2103T, (CS2113T for CS2113), (CS2113 for CS2113T)
-       Pre-requisite: CS2040C or ((CS2030 or its equivalent) and CS2040/S)
-       Core Requisites: CS2101 Effective Communication for Computing Professionals is co-requisite for CS2113T. Students exempted from CS2101 will take CS2113 which does not have CS2101 as co-req. Otherwise, CS2113 and CS2113T are identical.
-       ------------------------------------------------------------------------------------
-       ------------------------------------------------------------------------------------
-       CG2028 Computer Organization (2MCs) | Grade: B
-       Department: Computing and Engineering Programme
-       Faculty: Multi Disciplinary Programme
-       Preclusion: EE2024 Programming for Computer Interfaces
-       Pre-requisite: CS1010 Programming Methodology and (EE2026 Digital Design / EE2020 Digital Fundamentals)
-       Core Requisites: null
        ------------------------------------------------------------------------------------
        You have a total of 6 MCs
        Your current CAP is: 4.50
@@ -467,8 +443,8 @@ Example:
 $ list module
       ______________________________________________________________________________________
        Here are the modules in your list:
-       1. CS2113T Software Engineering & Object-Oriented Programming (4MCs) Grade: A
-       2. CG2028 Computer Organization (2MCs) Grade: B
+       1. CS2113T Software Engineering & Object-Oriented Programming (4MCs) | Grade: A
+       2. CG2028 Computer Organization (2MCs) | Grade: B
        ------------------------------------------------------------------------------------
        You have a total of 6 MCs
        Your current CAP is: 4.50
@@ -477,26 +453,25 @@ $ list module
 $ delete module CG2028
       ______________________________________________________________________________________
        Ok. The following module has been deleted:
-         CG2028 Computer Organization (2MCs) 
+         CG2028 Computer Organization (2MCs) | Grade: B
        Now you have 1 module(s) in the list.
       ______________________________________________________________________________________
 
 $ list module
       ______________________________________________________________________________________
        Here are the modules in your list:
-       1. CS2113T Software Engineering & Object-Oriented Programming (4MCs) Grade: A
-       2. CG2028 Computer Organization (2MCs) Grade: B
+       1. CS2113T Software Engineering & Object-Oriented Programming (4MCs) | Grade: A
        ------------------------------------------------------------------------------------
-       You have a total of 6 MCs
-       Your current CAP is: 4.50
+       You have a total of 4 MCs
+       Your current CAP is: 5.00
       ______________________________________________________________________________________
 ```
 
-### Finding Tasks or Lessons by keyword - `find`
-
-Finds tasks/lessons that contains the specific keyword.
+### Finding Tasks, Lessons or Modules by keyword - `find`
 
 #### Task
+
+Finds matching tasks containing the keyword you specify.
 
 Format: `find task [KEYWORD]`
 
@@ -516,6 +491,8 @@ $ find task CS2113T
 
 #### Lesson
 
+Finds matching lessons containing the keyword you specify.
+
 Format: `find lesson [KEYWORD]`
 
 * `KEYWORD` refers to the intended keyword, not case-sensitive
@@ -532,26 +509,43 @@ $ find lesson CS2113T
       ______________________________________________________________________________________
 ```
 
-### Retrieving Module information - `moduleinfo`
+### Module
 
-Shows you a complete list of information for any modules that are listed on NUSMods. You can find information 
+Shows you a complete list of information for any modules that are listed on NUSMods. You can find information
 such as module title, modular credits, department, faculty, preclusion, pre-requisites, etc.
 
-Format: `moduleinfo [MODULE_CODE]`
+Format: `find module [MODULE_CODE] {verbose}`
 
 * `MODULE_CODE` refers to the module code (based on NUSMods), not case-sensitive
+* `verbose` will show you more information about the module, including a full description
 
 Example:
-
 ```
-$ moduleinfo CS3219
+$ find module cs3219
       ______________________________________________________________________________________
        CS3219 Software Engineering Principles and Patterns (4MCs) 
        Department: Computer Science
        Faculty: Computing
        Preclusion: CS3213 Software Systems Design
-       Pre-requisite: CS2103 or its equivalent
-       Core Requisites: null
+       Prerequisite: CS2103 or its equivalent
+       Corequisite: null
+      ______________________________________________________________________________________
+
+$ find module CS3219 verbose
+      ______________________________________________________________________________________
+       CS3219 Software Engineering Principles and Patterns (4MCs) 
+       This module provides an in-depth, hands-on experience in key aspects of software eng
+       ineering that accompany the development of software. Based on proven principles and
+       best practices, this module focuses on software architectural design from the perspe
+       ctive of the software process. It covers techniques for requirement elicitation and
+       specification that provide sound base for architectural design. The module covers de
+       sign decision exploration as well as patterns that explicate principles and best pra
+       ctices in replicable form.
+       Department: Computer Science
+       Faculty: Computing
+       Preclusion: CS3213 Software Systems Design
+       Prerequisite: CS2103 or its equivalent
+       Corequisite: null
       ______________________________________________________________________________________
 ```
 
@@ -565,15 +559,13 @@ Example:
 $ set grade CS2113T A
       ______________________________________________________________________________________
        You have changed your grade for this module: 
-          CS2113T Software Engineering & Object-Oriented Programming (4MCs) Grade: A
-          Grade: A
+          CS2113T Software Engineering & Object-Oriented Programming (4MCs) | Grade: A
       ______________________________________________________________________________________
 
 $ set grade CG2028 B
       ______________________________________________________________________________________
        You have changed your grade for this module: 
-          CG2028 Computer Organization (2MCs) Grade: B
-          Grade: B
+          CG2028 Computer Organization (2MCs) | Grade: B
       ______________________________________________________________________________________
 ```
 
@@ -634,12 +626,11 @@ Modules:
 | `add        module [MODULE_CODE]`                                                      | To add a module                                  |
 | `list       task {PERIOD/PRIORITY}`                                                    | To list all tasks                                |
 | `list       lesson {PERIOD}`                                                           | To list all lessons                              |
-| `list       module {verbose}`                                                            | To list all modules                              |
+| `list       module`                                                                    | To list all modules                              |
 | `delete     task [INDEX]`                                                              | To delete a task                                 |
 | `delete     lesson [INDEX]`                                                            | To delete a lesson                               |
 | `delete     module [MODULE_CODE]`                                                      | To delete a module                               |
 | `done       task [INDEX]`                                                              | To mark a task as done                           |
-| `find       [task/lesson] [KEYWORD]`                                                   | To find tasks/lessons with the specified keyword |
-| `moduleinfo [MODULE_CODE]`                                                             | To display module details                        |
+| `find       [task/lesson/module] [KEYWORD/MODULE_CODE] {verbose}`                      | To find tasks/lessons/module with the specified keyword/module code |
 | `set        grade [MODULE_CODE] [GRADE]`                                               | To set the grade for a particular module         |
 | `exit`                                                                                 | To exit the program                              |
