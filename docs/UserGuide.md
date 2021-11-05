@@ -121,6 +121,8 @@ is the same as the one used by this guide, which can be found [here](#features).
 
 ### Adding a Task, Lesson or Module - `add`
 
+Adds a task, lesson or module of your specification to your list.
+
 #### Task
 
 A task contains a title, day of the week, a priority, and an information.
@@ -227,6 +229,8 @@ $ add module CG2028
 
 ### Listing Tasks, Lessons or Modules - `list`
 
+Lists out all tasks, lessons or modules in your list with optional filtering or sorting.
+
 #### Task
 
 Format: `list task {PERIOD/PRIORITY}`
@@ -316,6 +320,8 @@ $ list module
 
 ### Marking a Task as done - `done`
 
+Marks your specified task as done.
+
 Format: `done task [INDEX]`
 
 * `INDEX` refers to the index of the task. You can view it by executing `list task`.
@@ -358,6 +364,8 @@ $ list task
 > 💡 `[X]` indicates that the task is completed.
 
 ### Deleting Tasks, Lessons or Modules - `delete`
+
+Removes a task, lesson or module from your list.
 
 > ❗ Once removed, the deleted task/lesson/module cannot be restored.
 
@@ -509,7 +517,7 @@ $ find lesson CS2113T
       ______________________________________________________________________________________
 ```
 
-### Module
+#### Module
 
 Shows you a complete list of information for any modules that are listed on NUSMods. You can find information
 such as module title, modular credits, department, faculty, preclusion, pre-requisites, etc.
@@ -551,6 +559,9 @@ $ find module CS3219 verbose
 
 ### Setting module grade - `set grade`
 
+Allows you to add a grade value to a module in your list.
+Grades can take the following values: A+, A, A-, B+, B, B-, C+, C, D+, D, F, S, U, CS, CU
+
 Format: `set grade [MODULE_CODE] [GRADE]`
 
 Example:
@@ -570,6 +581,8 @@ $ set grade CG2028 B
 ```
 
 ### Exiting the program - `exit`
+
+Closes the programme.
 
 Format: `exit`
 
