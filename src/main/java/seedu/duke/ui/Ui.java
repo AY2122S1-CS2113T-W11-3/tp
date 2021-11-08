@@ -7,6 +7,8 @@ import java.util.Scanner;
 import seedu.duke.Duke;
 import seedu.duke.commons.core.CommandFormat;
 
+import seedu.duke.commons.core.DayOfTheWeek;
+import seedu.duke.commons.core.exceptions.DayOfTheWeekException;
 import seedu.duke.model.lesson.Lesson;
 import seedu.duke.model.lesson.LessonList;
 import seedu.duke.model.module.Module;
@@ -229,7 +231,7 @@ public class Ui {
      * @param taskList the initial task list
      * @param period the specified period
      */
-    public void printTasksWithPeriod(TaskList taskList, String period) {
+    public void printTasksWithPeriod(TaskList taskList, String period) throws DayOfTheWeekException {
         if (isToday(period)) {
             period = getToday();
         } else if (isTomorrow(period)) {
@@ -240,9 +242,9 @@ public class Ui {
 
         System.out.print(LINE);
         if (filteredTaskList.isEmpty()) {
-            System.out.println(PADDING + "There is no task on " + period.toUpperCase() + ".");
+            System.out.println(PADDING + "There is no task on " + DayOfTheWeek.toProper(period) + ".");
         } else {
-            System.out.println(PADDING + "Here are the tasks on " + period.toUpperCase() + ":");
+            System.out.println(PADDING + "Here are the tasks on " + DayOfTheWeek.toProper(period) + ":");
             System.out.print(filteredTaskList);
         }
         System.out.println(LINE);
@@ -319,7 +321,7 @@ public class Ui {
      * @param lessonList the unfiltered list of lessons
      * @param period the specified period
      */
-    public void printLessonsWithPeriod(LessonList lessonList, String period) {
+    public void printLessonsWithPeriod(LessonList lessonList, String period) throws DayOfTheWeekException {
         if (isToday(period)) {
             period = getToday();
         } else if (isTomorrow(period)) {
@@ -330,9 +332,9 @@ public class Ui {
 
         System.out.print(LINE);
         if (filteredLessonList.isEmpty()) {
-            System.out.println(PADDING + "There is no lesson on " + period.toUpperCase() + ".");
+            System.out.println(PADDING + "There is no lesson on " + DayOfTheWeek.toProper(period) + ".");
         } else {
-            System.out.println(PADDING + "Here are the lessons on " + period.toUpperCase() + ":");
+            System.out.println(PADDING + "Here are the lessons on " + DayOfTheWeek.toProper(period) + ":");
             System.out.print(filteredLessonList);
         }
         System.out.println(LINE);

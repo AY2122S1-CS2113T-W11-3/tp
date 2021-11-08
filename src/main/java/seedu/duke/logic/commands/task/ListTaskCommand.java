@@ -1,5 +1,6 @@
 package seedu.duke.logic.commands.task;
 
+import seedu.duke.commons.core.exceptions.DayOfTheWeekException;
 import seedu.duke.logic.commands.Command;
 import seedu.duke.model.lesson.LessonList;
 import seedu.duke.model.module.ModuleList;
@@ -16,7 +17,8 @@ public class ListTaskCommand extends Command {
     }
 
     @Override
-    public void execute(Ui ui, Storage storage, TaskList taskList, LessonList lessonList, ModuleList moduleList) {
+    public void execute(Ui ui, Storage storage, TaskList taskList, LessonList lessonList, ModuleList moduleList)
+            throws DayOfTheWeekException {
         if (taskList.isEmpty()) {
             ui.printMessage("There are no tasks in the list.");
         } else if (period.isBlank()) {
