@@ -17,7 +17,8 @@ public class ListLessonCommand extends Command {
     }
 
     @Override
-    public void execute(Ui ui, Storage storage, TaskList taskList, LessonList lessonList, ModuleList moduleList) throws DayOfTheWeekException {
+    public void execute(Ui ui, Storage storage, TaskList taskList, LessonList lessonList, ModuleList moduleList)
+            throws DayOfTheWeekException {
         if (lessonList.isEmpty()) {
             ui.printMessage("There are no lessons in the list.");
         } else if (period.isBlank()) {
